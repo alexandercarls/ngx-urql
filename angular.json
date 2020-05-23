@@ -2,5 +2,164 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "example": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "changeDetection": "OnPush",
+          "displayBlock": true,
+          "style": "scss",
+          "skipTests": true
+        },
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@schematics/angular:module": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        }
+      },
+      "root": "projects/example",
+      "sourceRoot": "projects/example/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/example",
+            "index": "projects/example/src/index.html",
+            "main": "projects/example/src/main.ts",
+            "polyfills": "projects/example/src/polyfills.ts",
+            "tsConfig": "projects/example/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/example/src/favicon.ico",
+              "projects/example/src/assets"
+            ],
+            "styles": [
+              "projects/example/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/example/src/environments/environment.ts",
+                  "with": "projects/example/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "example:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "example:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/example/tsconfig.app.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "example:build"
+          }
+        }
+      }
+    },
+    "ngx-urql": {
+      "projectType": "library",
+      "root": "projects/ngx-urql",
+      "sourceRoot": "projects/ngx-urql/src",
+      "prefix": "ngx-urql",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-urql/tsconfig.lib.json",
+            "project": "projects/ngx-urql/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-urql/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-urql/src/test.ts",
+            "tsConfig": "projects/ngx-urql/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-urql/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-urql/tsconfig.lib.json",
+              "projects/ngx-urql/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }},
+  "cli": {
+    "analytics": false,
+    "packageManager": "yarn"
+  },
+  "defaultProject": "example"
 }

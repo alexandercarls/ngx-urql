@@ -11,10 +11,17 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
+    "strict": true,
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngx-urql": [
+        "dist/ngx-urql/ngx-urql",
+        "dist/ngx-urql"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

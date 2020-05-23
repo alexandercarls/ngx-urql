@@ -1,0 +1,308 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+union _Entity = Comment | Post | User
+
+type Comment {
+  _boolean: Boolean!
+  _float(fixed: Int, max: Float, min: Float): Float!
+  _int(max: Int, min: Int): Int!
+  _nest: Comment!
+  _string(casing: String, full: Boolean, length: Int, locale: String, max: Int, min: Int, nationality: String, pool: String, sentences: Int, syllables: Int, template: String, type: String, words: Int): String!
+  id: ID!
+  post: Post!
+  text(length: Int): String!
+  user: User!
+}
+
+type Mutation {
+  _createSnapshot(key: String!): Boolean!
+  createComment(input: CreateCommentInput!): Comment!
+  createPost(input: CreatePostInput!): Post!
+  createUser(input: CreateUserInput!): User!
+  decrementUserAge(id: ID!): Int
+  deleteComment(id: ID!): ID!
+  deletePost(id: ID!): ID!
+  deleteUser(id: ID!): ID!
+  incrementUserAge(id: ID!): Int
+  updateComment(id: ID!, input: UpdateCommentInput!): Comment!
+  updatePost(id: ID!, input: UpdatePostInput!): Post!
+  updateUser(id: ID!, input: UpdateUserInput!): User!
+}
+
+type Post {
+  _boolean: Boolean!
+  _float(fixed: Int, max: Float, min: Float): Float!
+  _int(max: Int, min: Int): Int!
+  _nest: Post!
+  _string(casing: String, full: Boolean, length: Int, locale: String, max: Int, min: Int, nationality: String, pool: String, sentences: Int, syllables: Int, template: String, type: String, words: Int): String!
+  comments(dir: String, limit: Int, page: Int, ref: String, sort: String, where: CommentsWhere): [Comment]
+  date(length: Int): String!
+  id: ID!
+  title(length: Int): String!
+  user: User!
+}
+
+type Query {
+  _aggregation(field: String, ref: String, stat: String!, type: String): Float!
+  _entities(representations: [_Any!]!): [_Entity]!
+  _service: _Service!
+  _typeDefs: String!
+  comment(id: ID!): Comment
+  comments(dir: String, limit: Int, page: Int, ref: String, sort: String, where: CommentsWhere): [Comment]
+  post(id: ID!): Post
+  posts(dir: String, limit: Int, page: Int, ref: String, sort: String, where: PostsWhere): [Post]
+  user(id: ID!): User
+  users(dir: String, limit: Int, page: Int, ref: String, sort: String, where: UsersWhere): [User]
+}
+
+type User {
+  _boolean: Boolean!
+  _float(fixed: Int, max: Float, min: Float): Float!
+  _int(max: Int, min: Int): Int!
+  _nest: User!
+  _string(casing: String, full: Boolean, length: Int, locale: String, max: Int, min: Int, nationality: String, pool: String, sentences: Int, syllables: Int, template: String, type: String, words: Int): String!
+  age(math: MathOptions): Int!
+  comments(dir: String, limit: Int, page: Int, ref: String, sort: String, where: CommentsWhere): [Comment]
+  firstname(length: Int): String!
+  id: ID!
+  posts(dir: String, limit: Int, page: Int, ref: String, sort: String, where: PostsWhere): [Post]
+}
+
+type _Service {
+  sdl: String
+}
+
+enum MathOptions {
+  CEIL
+  FLOOR
+  ROUND
+}
+
+input CommentsWhere {
+  and: [CommentsWhere!]
+  id_eq: Float
+  id_ge: Float
+  id_gt: Float
+  id_in: [ID!]
+  id_le: Float
+  id_lt: Float
+  id_neq: Float
+  id_nin: [ID!]
+  like: String
+  not: [CommentsWhere!]
+  or: [CommentsWhere!]
+  post_and: [PostsWhere!]
+  post_date_contains: String
+  post_date_endswith: String
+  post_date_eq: String
+  post_date_exists: Boolean
+  post_date_in: [String!]
+  post_date_neq: String
+  post_date_nin: [String!]
+  post_date_startswith: String
+  post_id_eq: Float
+  post_id_exists: Boolean
+  post_id_ge: Float
+  post_id_gt: Float
+  post_id_in: [ID!]
+  post_id_le: Float
+  post_id_lt: Float
+  post_id_neq: Float
+  post_id_nin: [ID!]
+  post_like: String
+  post_not: [PostsWhere!]
+  post_or: [PostsWhere!]
+  post_search: String
+  post_title_contains: String
+  post_title_endswith: String
+  post_title_eq: String
+  post_title_exists: Boolean
+  post_title_in: [String!]
+  post_title_neq: String
+  post_title_nin: [String!]
+  post_title_startswith: String
+  post_user_id_exists: Boolean
+  search: String
+  text_contains: String
+  text_endswith: String
+  text_eq: String
+  text_exists: Boolean
+  text_in: [String!]
+  text_neq: String
+  text_nin: [String!]
+  text_startswith: String
+  user_age_eq: Int
+  user_age_exists: Boolean
+  user_age_ge: Int
+  user_age_gt: Int
+  user_age_in: [Int!]
+  user_age_le: Int
+  user_age_lt: Int
+  user_age_neq: Int
+  user_age_nin: [Int!]
+  user_and: [UsersWhere!]
+  user_firstname_contains: String
+  user_firstname_endswith: String
+  user_firstname_eq: String
+  user_firstname_exists: Boolean
+  user_firstname_in: [String!]
+  user_firstname_neq: String
+  user_firstname_nin: [String!]
+  user_firstname_startswith: String
+  user_id_eq: Float
+  user_id_exists: Boolean
+  user_id_ge: Float
+  user_id_gt: Float
+  user_id_in: [ID!]
+  user_id_le: Float
+  user_id_lt: Float
+  user_id_neq: Float
+  user_id_nin: [ID!]
+  user_like: String
+  user_not: [UsersWhere!]
+  user_or: [UsersWhere!]
+  user_search: String
+}
+
+input CreateCommentInput {
+  post_id: ID!
+  text: String!
+  user_id: ID!
+}
+
+input CreatePostInput {
+  date: String!
+  title: String!
+  user_id: ID!
+}
+
+input CreateUserInput {
+  age: Int!
+  firstname: String!
+}
+
+input PostsWhere {
+  and: [PostsWhere!]
+  date_contains: String
+  date_endswith: String
+  date_eq: String
+  date_exists: Boolean
+  date_in: [String!]
+  date_neq: String
+  date_nin: [String!]
+  date_startswith: String
+  id_eq: Float
+  id_ge: Float
+  id_gt: Float
+  id_in: [ID!]
+  id_le: Float
+  id_lt: Float
+  id_neq: Float
+  id_nin: [ID!]
+  like: String
+  not: [PostsWhere!]
+  or: [PostsWhere!]
+  search: String
+  title_contains: String
+  title_endswith: String
+  title_eq: String
+  title_exists: Boolean
+  title_in: [String!]
+  title_neq: String
+  title_nin: [String!]
+  title_startswith: String
+  user_age_eq: Int
+  user_age_exists: Boolean
+  user_age_ge: Int
+  user_age_gt: Int
+  user_age_in: [Int!]
+  user_age_le: Int
+  user_age_lt: Int
+  user_age_neq: Int
+  user_age_nin: [Int!]
+  user_and: [UsersWhere!]
+  user_firstname_contains: String
+  user_firstname_endswith: String
+  user_firstname_eq: String
+  user_firstname_exists: Boolean
+  user_firstname_in: [String!]
+  user_firstname_neq: String
+  user_firstname_nin: [String!]
+  user_firstname_startswith: String
+  user_id_eq: Float
+  user_id_exists: Boolean
+  user_id_ge: Float
+  user_id_gt: Float
+  user_id_in: [ID!]
+  user_id_le: Float
+  user_id_lt: Float
+  user_id_neq: Float
+  user_id_nin: [ID!]
+  user_like: String
+  user_not: [UsersWhere!]
+  user_or: [UsersWhere!]
+  user_search: String
+}
+
+input UpdateCommentInput {
+  post_id: ID
+  text: String
+  user_id: ID
+}
+
+input UpdatePostInput {
+  date: String
+  title: String
+  user_id: ID
+}
+
+input UpdateUserInput {
+  age: Int
+  firstname: String
+}
+
+input UsersWhere {
+  age_eq: Int
+  age_exists: Boolean
+  age_ge: Int
+  age_gt: Int
+  age_in: [Int!]
+  age_le: Int
+  age_lt: Int
+  age_neq: Int
+  age_nin: [Int!]
+  and: [UsersWhere!]
+  firstname_contains: String
+  firstname_endswith: String
+  firstname_eq: String
+  firstname_exists: Boolean
+  firstname_in: [String!]
+  firstname_neq: String
+  firstname_nin: [String!]
+  firstname_startswith: String
+  id_eq: Float
+  id_ge: Float
+  id_gt: Float
+  id_in: [ID!]
+  id_le: Float
+  id_lt: Float
+  id_neq: Float
+  id_nin: [ID!]
+  like: String
+  not: [UsersWhere!]
+  or: [UsersWhere!]
+  search: String
+}
+
+
+scalar _Any
+
+"The `DateTime` scalar represents a date and time following the ISO 8601 standard"
+scalar DateTime
+
+scalar _FieldSet

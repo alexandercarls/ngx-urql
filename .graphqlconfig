@@ -1,0 +1,15 @@
+{
+  "name": "Example Blog GraphQL Schema",
+  "schemaPath": "schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "https://fakeql.com/graphql/439b33402a495423dbaa6c467a59bcc0",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": false
+      }
+    }
+  }
+}

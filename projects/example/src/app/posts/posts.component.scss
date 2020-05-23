@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 300px;
+  min-width: 0; // needed due to how `white-space: nowrap` on a child works: https://codepen.io/aj-foster/pen/emBYPW
+}
+
+a {
+  text-overflow: ellipsis;
+  overflow-x: auto;
+  white-space: nowrap;
+
+  .active {
+    color: green;
+  }
+}
+

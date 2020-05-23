@@ -1,0 +1,5 @@
+<div class="posts">
+  <a *ngFor="let p of posts | async" [routerLink]="p.id" routerLinkActive="active">{{p.title}}</a>
+</div>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,29 @@
+<!--https://github.com/FormidableLabs/urql/blob/master/packages/svelte-urql/example/src/App.svelte-->
+<ng-container *ngIf="postQuery | async as postResult">
+  <ng-container *ngIf="postResult.fetching">Loading</ng-container>
+  <ng-container *ngIf="postResult.error">Error {{postResult.error}}</ng-container>
+
+  <!--  This allows for partial data, while also allowing for errors in the response-->
+  <ng-container *ngIf="postResult.data as post">
+        <form [formGroup]="postForm" (ngSubmit)="handleSubmit()">
+          <input formControlName="title">
+
+          <button>Save</button>
+        </form>
+    <pre>{{post | json}}</pre>
+  </ng-container>
+
+  <!--  This does not allow for partial responses-->
+  <ng-container *ngIf="postResult.data && !postResult.error">
+    <!--    ... and does not allow for `as` unwrapping-->
+    <pre>{{postResult.data.post | json}}</pre>
+    <!--...-->
+  </ng-container>
+</ng-container>
+
+
+<!--<ngx-urql-query [query]="postQuery" [partialResponse]="true">-->
+<!--  <div *ngxUrqlFetching>Loading</div>-->
+<!--  <div *ngxUrqlError #error=error>Error {{error}}</div>-->
+<!--  <div *ngxUrqlData #post=data>{{post}}</div>-->
+<!--</ngx-urql-query>-->
