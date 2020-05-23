@@ -1,5 +1,5 @@
 {
-  "name": "ngx-urql",
+  "name": "angular-urql",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -22,7 +22,8 @@
     "graphql": "^15.0.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "ngx-urql": "file:dist/ngx-urql"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.6",

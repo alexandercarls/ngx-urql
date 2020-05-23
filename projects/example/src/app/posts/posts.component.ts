@@ -10,7 +10,7 @@ import {GraphQLClient} from "ngx-urql";
 })
 export class PostsComponent {
 
-  public posts = this.gql.query<any, undefined>({
+  public posts = this.gql.query<any>({
     query: `
       query Posts {
         posts {
@@ -19,9 +19,7 @@ export class PostsComponent {
         }
       }
     `,
-    variables: undefined,
   }).pipe(
-    tap(console.log),
     map(r => r.data?.posts ?? [])
   );
 

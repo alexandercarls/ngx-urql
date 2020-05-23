@@ -5,10 +5,9 @@ import { DocumentNode } from 'graphql';
 import { GRAPHQL_CLIENT_CONFIG, ClientConfig } from './client-config';
 import {from, Observable} from 'rxjs';
 
-
-
 // TODO: Maybe split the differen parts in their own service (query, mutation, subscription) to enable code splitting.
 
+/** The URQL application-wide client library. Each execute method starts a GraphQL request and returns a stream of results. */
 @Injectable()
 export class GraphQLClient {
   private client = new Client(this.globalConfig);
@@ -72,7 +71,7 @@ export class GraphQLClient {
 
 export interface QueryArguments<V> {
   query: string | DocumentNode;
-  variables: V;
+  variables?: V;
   requestPolicy?: RequestPolicy;
   pollInterval?: number;
   context?: Partial<OperationContext>;
