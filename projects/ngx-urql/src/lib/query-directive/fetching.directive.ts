@@ -21,7 +21,7 @@ export class FetchingDirective {
       this.viewContainer.createEmbeddedView(this.templateRef);
       this.hasView = true;
     } else {
-      this.viewContainer.clear()
+      this.viewContainer.clear();
       this.hasView = false;
     }
   }

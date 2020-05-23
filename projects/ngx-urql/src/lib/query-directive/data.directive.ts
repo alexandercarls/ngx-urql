@@ -22,7 +22,7 @@ export class DataDirective {
       this.viewContainer.createEmbeddedView(this.templateRef, {$implicit: data});
       this.hasView = true;
     } else {
-      this.viewContainer.clear()
+      this.viewContainer.clear();
       this.hasView = false;
     }
   }

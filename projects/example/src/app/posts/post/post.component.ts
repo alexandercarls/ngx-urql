@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {GraphQLClient} from "ngx-urql";
-import {ActivatedRoute} from "@angular/router";
-import {filter, map, shareReplay, switchMap} from "rxjs/operators";
-import {FormBuilder} from "@angular/forms";
+import {GraphQLClient} from 'ngx-urql';
+import {ActivatedRoute} from '@angular/router';
+import {filter, map, shareReplay, switchMap} from 'rxjs/operators';
+import {FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'app-post',
@@ -36,7 +36,7 @@ export class PostComponent implements OnInit {
       variables: {id}
     })),
     shareReplay(1)
-  )
+  );
 
   constructor(private route: ActivatedRoute,
               private gql: GraphQLClient,
@@ -53,7 +53,7 @@ export class PostComponent implements OnInit {
         this.postForm.patchValue({
           title: post.title,
         });
-      })
+      });
   }
 
   // TODO: Research why urql re-reruns all queries
@@ -69,7 +69,7 @@ export class PostComponent implements OnInit {
         id: +this.route.snapshot.paramMap.get('id')!,
         input: {title: this.postForm.value.title}
       }
-    })
+    });
   }
 
 }

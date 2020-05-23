@@ -1,8 +1,8 @@
 import {AfterContentInit, ContentChild, Directive, Input} from '@angular/core';
-import {QueryResult} from "../operations/query";
-import {DataDirective} from "./data.directive";
-import {FetchingDirective} from "./fetching.directive";
-import {ErrorDirective} from "./error.directive";
+import {QueryResult} from '../operations/query';
+import {DataDirective} from './data.directive';
+import {FetchingDirective} from './fetching.directive';
+import {ErrorDirective} from './error.directive';
 
 // TODO: The directive allow for partial results per default (i.e. displaying the error **and** data.
 //   Do we need to add an option to disable that behaviour?
@@ -23,7 +23,7 @@ export class QueryDirective<T> implements AfterContentInit {
 
     console.log('[QueryDirective]: Input changed - ', value);
 
-    this.fetchDirective?.showContent(value.fetching)
+    this.fetchDirective?.showContent(value.fetching);
 
     // We need to force remove the content if the query has no data (i.e. is fetching or has an error)
     // In the future the might be a UX patter where we can display the previous fetched content

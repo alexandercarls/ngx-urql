@@ -1,5 +1,5 @@
 import {Directive, TemplateRef, ViewContainerRef} from '@angular/core';
-import {CombinedError} from "@urql/core";
+import {CombinedError} from '@urql/core';
 
 @Directive({
   selector: '[gqlError]'
@@ -23,7 +23,7 @@ export class ErrorDirective {
       this.viewContainer.createEmbeddedView(this.templateRef, {$implicit: error});
       this.hasView = true;
     } else {
-      this.viewContainer.clear()
+      this.viewContainer.clear();
       this.hasView = false;
     }
   }

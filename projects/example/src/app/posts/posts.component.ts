@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {map, tap} from "rxjs/operators";
-import {GraphQLClient} from "ngx-urql";
+import {map, tap} from 'rxjs/operators';
+import {GraphQLClient} from 'ngx-urql';
 
 @Component({
   selector: 'app-posts',
