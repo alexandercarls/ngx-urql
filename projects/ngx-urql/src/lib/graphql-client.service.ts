@@ -1,11 +1,17 @@
-import { Injectable, Inject } from '@angular/core';
-import {Client, RequestPolicy, OperationContext, CombinedError, OperationResult} from '@urql/core';
-import { pipe, fromValue, concat, scan, map, toObservable } from 'wonka';
-import { DocumentNode } from 'graphql';
-import { GRAPHQL_CLIENT_CONFIG, ClientConfig } from './client-config';
-import {from, Observable} from 'rxjs';
+import {Inject, Injectable} from '@angular/core';
+import {Client, OperationResult} from '@urql/core';
+import {ClientConfig, GRAPHQL_CLIENT_CONFIG} from './client-config';
+import {Observable} from 'rxjs';
+import {getQuery, QueryArguments, QueryResult} from "./operations/query";
+import {getMutation, MutationArguments} from "./operations/mutation";
+import {
+  getSubscription,
+  SubscriptionArguments,
+  SubscriptionHandler,
+  SubscriptionResult
+} from "./operations/subscription";
 
-// TODO: Maybe split the differen parts in their own service (query, mutation, subscription) to enable code splitting.
+// TODO: Maybe split the different parts in their own service (query, mutation, subscription) to enable code splitting.
 
 /** The URQL application-wide client library. Each execute method starts a GraphQL request and returns a stream of results. */
 @Injectable()
@@ -15,86 +21,21 @@ export class GraphQLClient {
   constructor(@Inject(GRAPHQL_CLIENT_CONFIG) private globalConfig: ClientConfig) {
   }
 
-  /*
-   * Reference React: https://github.com/FormidableLabs/urql/blob/master/packages/react-urql/src/hooks/useQuery.ts
-   * Reference Svelte: https://github.com/FormidableLabs/urql/blob/master/packages/svelte-urql/src/operations/query.ts
-   */
   public query<T, V = Record<string, any> | undefined>(args: QueryArguments<V>): Observable<QueryResult<T>> {
-
-    const queryResult = pipe(
-      concat([
-        // Initially set fetching to true
-        fromValue({ fetching: true, stale: false }),
-        pipe(
-          this.client.query<T>(
-            args.query,
-            args.variables,
-            {
-              requestPolicy: args.requestPolicy,
-              pollInterval: args.pollInterval,
-              ...args.context,
-            }),
-          map(({ stale, data, error, extensions }) => ({
-            fetching: false,
-            stale: !!stale,
-            data,
-            error,
-            extensions,
-          }))
-        ),
-        // When the source proactively closes, fetching is set to false
-        fromValue({ fetching: false, stale: false }),
-      ]),
-      // The individual partial results are merged into each previous result
-      scan(
-        (result, partial) => ({
-          ...result,
-          ...partial,
-        }),
-        initialState
-      ),
-      toObservable,
-    );
-
-    return new Observable<QueryResult<T>>(sub => queryResult.subscribe(sub));
+    return getQuery<T, V>(this.client)(args);
   }
 
-  /*
-   * Reference React: https://github.com/FormidableLabs/urql/blob/master/packages/react-urql/src/hooks/useMutation.ts
-   * Reference Svelte: https://github.com/FormidableLabs/urql/blob/master/packages/svelte-urql/src/operations/mutate.ts
-   */
   public mutate<T, V = Record<string, any> | undefined>(args: MutationArguments<V>): Observable<OperationResult<T>> {
-    return from(this.client.mutation(args.query, args.variables as any, args.context).toPromise())
+    return getMutation<T, V>(this.client)(args);
+  }
+
+  /**
+   * @UNTESTED
+   */
+  public subscribe<T = any, R = T, V = object>(args: SubscriptionArguments<V>, handler?: SubscriptionHandler<T, R>): Observable<SubscriptionResult<T>> {
+    return getSubscription<T, R, V>(this.client)(args, handler);
   }
 }
 
 
-export interface QueryArguments<V> {
-  query: string | DocumentNode;
-  variables?: V;
-  requestPolicy?: RequestPolicy;
-  pollInterval?: number;
-  context?: Partial<OperationContext>;
-}
 
-export interface QueryResult<T> {
-  fetching: boolean;
-  stale: boolean;
-  data?: T;
-  error?: CombinedError;
-  extensions?: Record<string, any>;
-}
-
-export interface MutationArguments<V> {
-  query: string | DocumentNode;
-  variables?: V;
-  context?: Partial<OperationContext>;
-}
-
-export const initialState = {
-  fetching: false,
-  stale: false,
-  error: undefined,
-  data: undefined,
-  extensions: undefined,
-};
