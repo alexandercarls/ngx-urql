@@ -1,8 +1,8 @@
-import {Observable} from "rxjs";
-import {concat, fromValue, map, pipe, scan, toObservable} from "wonka";
-import {Client, CombinedError, OperationContext, RequestPolicy} from "@urql/core";
-import {DocumentNode} from "graphql";
-import {initialState} from "./initial-state";
+import {Observable} from 'rxjs';
+import {concat, fromValue, map, pipe, scan, toObservable} from 'wonka';
+import {Client, CombinedError, OperationContext, RequestPolicy} from '@urql/core';
+import {DocumentNode} from 'graphql';
+import {initialState} from './initial-state';
 
 /*
  * Reference React: https://github.com/FormidableLabs/urql/blob/master/packages/react-urql/src/hooks/useQuery.ts
@@ -44,7 +44,7 @@ export function getQuery<T, V = Record<string, any> | undefined>(client: Client)
     );
 
     return new Observable<QueryResult<T>>(sub => queryResult.subscribe(sub));
-  }
+  };
 }
 
 export interface QueryArguments<V> {

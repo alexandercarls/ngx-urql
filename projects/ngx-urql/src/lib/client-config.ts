@@ -1,5 +1,5 @@
 import {InjectionToken} from '@angular/core';
-import {RequestPolicy} from "@urql/core/dist/types/types";
+import {RequestPolicy} from '@urql/core/dist/types/types';
 
 export const GRAPHQL_CLIENT_CONFIG = new InjectionToken<ClientConfig>('Default GraphQL client options');
 

@@ -121,7 +121,7 @@
       "projectType": "library",
       "root": "projects/ngx-urql",
       "sourceRoot": "projects/ngx-urql/src",
-      "prefix": "ngx-urql",
+      "prefix": "gql",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",

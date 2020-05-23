@@ -14,11 +14,22 @@
   </ng-container>
 
   <!--  This does not allow for partial responses-->
-  <ng-container *ngIf="postResult.data && !postResult.error">
-    <!--    ... and does not allow for `as` unwrapping-->
-    <pre>{{postResult.data.post | json}}</pre>
-    <!--...-->
-  </ng-container>
+<!--  <ng-container *ngIf="postResult.data && !postResult.error">-->
+<!--    &lt;!&ndash;    ... and does not allow for `as` unwrapping&ndash;&gt;-->
+<!--    <pre>{{postResult.data.post | json}}</pre>-->
+<!--    &lt;!&ndash;...&ndash;&gt;-->
+<!--  </ng-container>-->
+</ng-container>
+
+
+<ng-container [gqlQuery]="postQuery | async">
+  <div *gqlFetching>Loading</div>
+  <div *gqlData="let data">
+    <pre>Has Data: {{data | json }}</pre>
+  </div>
+  <div *gqlError="let error">
+    <pre>Error: {{error | json}}</pre>
+  </div>
 </ng-container>
 
 

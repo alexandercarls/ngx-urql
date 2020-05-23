@@ -17,7 +17,7 @@ export class PostComponent implements OnInit {
 
   postQuery = this.route.paramMap.pipe(
     map(pm => +pm.get('id')!),
-    switchMap(id => this.gql.query<any, { id: number }>({
+    switchMap(id => this.gql.query<{ post: Record<string, any> }, { id: number }>({
       query: `query PostById($id: ID!) {
   post(id: $id) {
     id
@@ -46,8 +46,8 @@ export class PostComponent implements OnInit {
 
   public ngOnInit(): void {
     this.postQuery.pipe(
-      filter(r => r.data),
-      map(r => r.data.post)
+      filter(r => !!r.data),
+      map(r => r.data!.post)
     )
       .subscribe(post => {
         this.postForm.patchValue({

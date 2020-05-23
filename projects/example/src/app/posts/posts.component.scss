@@ -11,10 +11,10 @@
 
 a {
   text-overflow: ellipsis;
-  overflow-x: auto;
+  overflow-x: hidden;
   white-space: nowrap;
 
-  .active {
+  &.active {
     color: green;
   }
 }

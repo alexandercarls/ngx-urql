@@ -1,9 +1,9 @@
-import {Client, CombinedError, createRequest, OperationContext} from "@urql/core";
-import {concat, fromValue, map, pipe, scan, toObservable} from "wonka";
-import {DocumentNode} from "graphql";
-import {initialState} from "./initial-state";
-import {Observable} from "rxjs";
-import {QueryResult} from "./query";
+import {Client, CombinedError, createRequest, OperationContext} from '@urql/core';
+import {concat, fromValue, map, pipe, scan, toObservable} from 'wonka';
+import {DocumentNode} from 'graphql';
+import {initialState} from './initial-state';
+import {Observable} from 'rxjs';
+import {QueryResult} from './query';
 
 /*
  * Reference React: https://github.com/FormidableLabs/urql/blob/master/packages/react-urql/src/hooks/useSubscription.ts
@@ -24,7 +24,9 @@ export function getSubscribe<T = any, R = T, V = object>(client: Client): (
         pipe(
           client.executeSubscription(request, args.context),
           map(({stale, data, error, extensions}) => ({
-            fetching: false, // TODO: React sets this to true: https://github.com/FormidableLabs/urql/blob/master/packages/react-urql/src/hooks/useSubscription.ts#L76
+            // TODO: React sets this to true:
+            //  https://github.com/FormidableLabs/urql/blob/master/packages/react-urql/src/hooks/useSubscription.ts#L76
+            fetching: false,
             stale: !!stale,
             data,
             error,
@@ -47,7 +49,7 @@ export function getSubscribe<T = any, R = T, V = object>(client: Client): (
     );
 
     return new Observable<QueryResult<T>>(sub => queryResult.subscribe(sub));
-  }
+  };
 }
 
 export interface SubscriptionArguments<V> {

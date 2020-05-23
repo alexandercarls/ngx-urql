@@ -4,6 +4,7 @@ import { PostsRoutingModule } from './posts-routing.module';
 import {PostsComponent} from "./posts.component";
 import { PostComponent } from './post/post.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {NgxUrqlModule} from "ngx-urql";
 
 
 @NgModule({
@@ -11,7 +12,10 @@ import {ReactiveFormsModule} from "@angular/forms";
   imports: [
     CommonModule,
     PostsRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    // TODO: What is the best practive for the registation?
+    //  forRoot, forChild, and without those Methods is confusing
+    NgxUrqlModule,
   ]
 })
 export class PostsModule { }

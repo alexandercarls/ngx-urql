@@ -2,14 +2,9 @@ import {Inject, Injectable} from '@angular/core';
 import {Client, OperationResult} from '@urql/core';
 import {ClientConfig, GRAPHQL_CLIENT_CONFIG} from './client-config';
 import {Observable} from 'rxjs';
-import {getQuery, QueryArguments, QueryResult} from "./operations/query";
-import {getMutate, MutationArguments} from "./operations/mutation";
-import {
-  getSubscribe,
-  SubscriptionArguments,
-  SubscriptionHandler,
-  SubscriptionResult
-} from "./operations/subscription";
+import {getQuery, QueryArguments, QueryResult} from './operations/query';
+import {getMutate, MutationArguments} from './operations/mutation';
+import {getSubscribe, SubscriptionArguments, SubscriptionHandler, SubscriptionResult} from './operations/subscription';
 
 // TODO: Maybe split the different parts in their own service (query, mutation, subscription) to enable code splitting.
 
@@ -32,7 +27,10 @@ export class GraphQLClient {
   /**
    * @UNTESTED
    */
-  public subscribe<T = any, R = T, V = object>(args: SubscriptionArguments<V>, handler?: SubscriptionHandler<T, R>): Observable<SubscriptionResult<T>> {
+  public subscribe<T = any, R = T, V = object>(
+    args: SubscriptionArguments<V>,
+    handler?: SubscriptionHandler<T, R>
+  ): Observable<SubscriptionResult<T>> {
     return getSubscribe<T, R, V>(this.client)(args, handler);
   }
 }
