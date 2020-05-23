@@ -3,9 +3,9 @@ import {Client, OperationResult} from '@urql/core';
 import {ClientConfig, GRAPHQL_CLIENT_CONFIG} from './client-config';
 import {Observable} from 'rxjs';
 import {getQuery, QueryArguments, QueryResult} from "./operations/query";
-import {getMutation, MutationArguments} from "./operations/mutation";
+import {getMutate, MutationArguments} from "./operations/mutation";
 import {
-  getSubscription,
+  getSubscribe,
   SubscriptionArguments,
   SubscriptionHandler,
   SubscriptionResult
@@ -26,14 +26,14 @@ export class GraphQLClient {
   }
 
   public mutate<T, V = Record<string, any> | undefined>(args: MutationArguments<V>): Observable<OperationResult<T>> {
-    return getMutation<T, V>(this.client)(args);
+    return getMutate<T, V>(this.client)(args);
   }
 
   /**
    * @UNTESTED
    */
   public subscribe<T = any, R = T, V = object>(args: SubscriptionArguments<V>, handler?: SubscriptionHandler<T, R>): Observable<SubscriptionResult<T>> {
-    return getSubscription<T, R, V>(this.client)(args, handler);
+    return getSubscribe<T, R, V>(this.client)(args, handler);
   }
 }
 

@@ -10,7 +10,7 @@ import {QueryResult} from "./query";
  * Reference Svelte: https://github.com/FormidableLabs/urql/blob/master/packages/svelte-urql/src/operations/subscription.ts
  */
 
-export function getSubscription<T = any, R = T, V = object>(client: Client): (
+export function getSubscribe<T = any, R = T, V = object>(client: Client): (
   args: SubscriptionArguments<V>,
   handler?: SubscriptionHandler<T, R>
 ) => Observable<SubscriptionResult<T>> {

@@ -7,7 +7,7 @@ import {DocumentNode} from "graphql";
  * Reference Svelte: https://github.com/FormidableLabs/urql/blob/master/packages/svelte-urql/src/operations/mutate.ts
  */
 
-export function getMutation<T, V = Record<string, any> | undefined>(client: Client): (args: MutationArguments<V>) => Observable<OperationResult<T>> {
+export function getMutate<T, V = Record<string, any> | undefined>(client: Client): (args: MutationArguments<V>) => Observable<OperationResult<T>> {
   return args => from(client.mutation(args.query, args.variables as any, args.context).toPromise())
 }
 
