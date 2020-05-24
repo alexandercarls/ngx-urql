@@ -42,7 +42,7 @@ export class NgxUrqlModule {
     url: string,
     clientConfig: PartialClientConfig = {},
   ): ModuleWithProviders<NgxUrqlModule> {
-    return this.forRoot(url, clientConfig);
+    return NgxUrqlModule.forRoot(url, clientConfig);
   }
 }
 

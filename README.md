@@ -6,7 +6,7 @@
 
 A GraphQL Library that wraps the blazing-fast [urql](https://formidable.com/open-source/urql/) library for Angular usage.
 
-# Getting started
+## Getting started
 
 1. Install the libraries:
 
@@ -47,6 +47,7 @@ NgxUrqlModule.forRoot('https://fakeql.com/graphql/439b33402a495423dbaa6c467a59bc
     
     } 
     ```
+    *WIP: The binding for `postsQuery` in `*gqlData` is only for Angular Template Type inference*
    
     ```html
    <ng-container [gqlQuery]="postsQuery" class="posts" >
@@ -105,7 +106,6 @@ NgxUrqlModule.forRoot('https://fakeql.com/graphql/439b33402a495423dbaa6c467a59bc
    
    </ng-container>
    ```
-
 
 ## Develop the library
 

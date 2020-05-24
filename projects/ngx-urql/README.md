@@ -1,24 +1,116 @@
-# NgxUrql
+> **IMPORTANT**: Under development, do not use it yet!
+>
+> https://hackmd.io/@Nm-4RAuGTTSIuC03vWpwFQ/S10cz-OiI
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
+# ngx-urql
 
-## Code scaffolding
+A GraphQL Library that wraps the blazing-fast [urql](https://formidable.com/open-source/urql/) library for Angular usage.
 
-Run `ng generate component component-name --project ngx-urql` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngx-urql`.
-> Note: Don't forget to add `--project ngx-urql` or else it will be added to the default project in your `angular.json` file. 
+## Getting started
 
-## Build
+1. Install the libraries:
 
-Run `ng build ngx-urql` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+yarn add ngx-urql graphql
+```
 
-## Publishing
+2. Register the `NgxUrqlModule`
 
-After building your library with `ng build ngx-urql`, go to the dist folder `cd dist/ngx-urql` and run `npm publish`.
+```javascript
+NgxUrqlModule.forRoot('https://fakeql.com/graphql/439b33402a495423dbaa6c467a59bcc0'),
+```
 
-## Running unit tests
+3. Inject the `GraphQLClient` in the component
 
-Run `ng test ngx-urql` to execute the unit tests via [Karma](https://karma-runner.github.io).
+    a) Consume the result observable declaratively.
+    ```typescript
+    @Component({
+      selector: 'app-posts',
+      templateUrl: './posts.component.html',
+      styleUrls: ['./posts.component.scss'],
+      changeDetection: ChangeDetectionStrategy.OnPush
+    })
+    export class PostsComponent {
+      public postsQuery = this.gql.query<Post>({
+        query: `
+          query Posts {
+            posts {
+              id
+              title
+            }
+          }
+        `,
+      });
+    
+      constructor(private gql: GraphQLClient) {
+      }
+    
+    } 
+    ```
+    *WIP: The binding for `postsQuery` in `*gqlData` is only for Angular Template Type inference*
+   
+    ```html
+   <ng-container [gqlQuery]="postsQuery" class="posts" >
+     <div *gqlFetching>Loading</div>
+     <div *gqlData="postsQuery; let data" class="posts">
+       <a *ngFor="let p of data.posts" [routerLink]="p.id" routerLinkActive="active">{{p.title}}</a>
+     </div>
+     <div *gqlError="let error">{{error}}</div>
+   </ng-container>
+    ```
+   
+    c) Manipulate the result observable to consume it explicitly (i.e. here it would ignore the fetching state and possible errors)
+    ```typescript
+   @Component({
+     selector: 'app-posts',
+     templateUrl: './posts.component.html',
+     styleUrls: ['./posts.component.scss'],
+     changeDetection: ChangeDetectionStrategy.OnPush
+   })
+   export class PostsComponent {
+     public posts = this.gql.query<Post>({
+       query: `
+         query Posts {
+           posts {
+             id
+             title
+           }
+         }
+       `,
+     }).pipe(
+       map(r => r.data?.posts ?? [])
+     );
+   
+     constructor(private gql: GraphQLClient) {
+     }
+   
+   }
+   ```
+   
+   c) Handle everything explicitly
+   
+   ```html
+   <ng-container *ngIf="postQuery | async as postResult">
+     <ng-container *ngIf="postResult.fetching">Loading</ng-container>
+     <ng-container *ngIf="postResult.error">Error {{postResult.error}}</ng-container>
+   
+     <!--  This allows for partial data, while also allowing for errors in the response-->
+     <ng-container *ngIf="postResult.data as post">
+       <form [formGroup]="postForm" (ngSubmit)="handleSubmit()">
+         <input formControlName="title">
+         <button>Save</button>
+       </form>
+   
+       <pre>{{post | json}}</pre>
+     </ng-container>
+   
+   </ng-container>
+   ```
 
-## Further help
+## Develop the library
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+1. Run `ng build ngx-urql --watch` to build the library itself.
+1. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. 
+
+The app and the library will automatically reload if you change any of the source files.
+
