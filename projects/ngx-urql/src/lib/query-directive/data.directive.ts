@@ -1,14 +1,11 @@
 import {ChangeDetectorRef, Directive, Input, TemplateRef, ViewContainerRef} from '@angular/core';
-import {Observable} from "rxjs";
-import {QueryResult} from "../operations/query";
-
-type ObservableData<T> = T extends Observable<infer U> ? U : T
+import {Observable} from 'rxjs';
+import {QueryResult} from '../operations/query';
 
 export class DataContext<T> {
   constructor(public $implicit: T) {
   }
 }
-
 
 @Directive({
   selector: '[gqlData]'
