@@ -1,18 +1,30 @@
-import {ChangeDetectorRef, Directive, TemplateRef, ViewContainerRef} from '@angular/core';
+import {ChangeDetectorRef, Directive, Input, TemplateRef, ViewContainerRef} from '@angular/core';
+import {Observable} from "rxjs";
+import {QueryResult} from "../operations/query";
+
+type ObservableData<T> = T extends Observable<infer U> ? U : T
+
+export class DataContext<T> {
+  constructor(public $implicit: T) {
+  }
+}
+
 
 @Directive({
   selector: '[gqlData]'
 })
-export class DataDirective {
+export class DataDirective<T> {
+  @Input('gqlData') query!: Observable<QueryResult<T>>;
+
   private hasView = false;
 
-  constructor(private templateRef: TemplateRef<any>,
+  constructor(private templateRef: TemplateRef<DataContext<T>>,
               private viewContainer: ViewContainerRef,
               private cdr: ChangeDetectorRef,
-              ) {
+  ) {
   }
 
-  public showContent(data?: unknown): void {
+  public showContent(data?: T): void {
     console.log('[DataDirective]: show content called');
 
     const show = data !== undefined;
@@ -22,7 +34,11 @@ export class DataDirective {
 
     if (show) {
       // TODO: Type is not inferred
-      this.viewContainer.createEmbeddedView(this.templateRef, {$implicit: data});
+      if (data === undefined) {
+        throw new Error('`data` must not be undefined');
+      }
+
+      this.viewContainer.createEmbeddedView(this.templateRef, new DataContext<T>(data));
       this.cdr.markForCheck();
       this.hasView = true;
     } else {

@@ -1,3 +1,7 @@
+> **IMPORTANT**: Under development, do not use it yet!
+>
+> https://hackmd.io/@Nm-4RAuGTTSIuC03vWpwFQ/S10cz-OiI
+
 # ngx-urql
 
 A GraphQL Library that wraps the blazing-fast [urql](https://formidable.com/open-source/urql/) library for Angular usage.
@@ -47,7 +51,7 @@ NgxUrqlModule.forRoot('https://fakeql.com/graphql/439b33402a495423dbaa6c467a59bc
     ```html
    <ng-container [gqlQuery]="postsQuery" class="posts" >
      <div *gqlFetching>Loading</div>
-     <div *gqlData="let data" class="posts">
+     <div *gqlData="postsQuery; let data" class="posts">
        <a *ngFor="let p of data.posts" [routerLink]="p.id" routerLinkActive="active">{{p.title}}</a>
      </div>
      <div *gqlError="let error">{{error}}</div>

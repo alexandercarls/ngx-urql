@@ -12,7 +12,7 @@ import {Observable, Subscription} from 'rxjs';
   selector: '[gqlQuery]',
 })
 export class QueryDirective<T> implements AfterContentInit, OnDestroy {
-  @ContentChild(DataDirective) dataDirective: DataDirective | null = null;
+  @ContentChild(DataDirective) dataDirective: DataDirective<T> | null = null;
   @ContentChild(FetchingDirective) fetchDirective: FetchingDirective | null = null;
   @ContentChild(ErrorDirective) errorDirective: ErrorDirective | null = null;
 
@@ -28,14 +28,15 @@ export class QueryDirective<T> implements AfterContentInit, OnDestroy {
 
     console.log('[QueryDirective]: Input changed - ', new Date().getTime());
 
-    // TODO: We need to resub if the Observable changes
+    // TODO: We need to re-sub if the Observable changes
     this.innerQuery = value;
   }
 
   public ngAfterContentInit(): void {
-    // TODO: Delay fetching by 100ms, test, as the content init is delayed by default?
-    //   it is always 1ms, and via 6x throttling and fast 3g, about 8ms.
     console.log('[QueryDirective]: ngAfterContentInit - ', new Date().getTime());
+    // TODO: Delay fetching state by 100ms, test, as the content init is delayed by default?
+    //   it is always 1ms, and via 6x throttling and fast 3g, about 8ms.
+
     this.sub = this.innerQuery.subscribe(r => {
       console.log(r);
       this.fetchDirective?.showContent(r.fetching);
@@ -45,10 +46,8 @@ export class QueryDirective<T> implements AfterContentInit, OnDestroy {
       // while a new request is fetching.
       this.dataDirective?.showContent(r?.data);
       this.errorDirective?.showContent(r?.error);
-      // this.cdr.markForCheck();
       // TODO: Should we throw an error if any of the directives is missing?
     });
-    // console.log('has fetch dir', this.fetchDirective)
   }
 
   public ngOnDestroy(): void {

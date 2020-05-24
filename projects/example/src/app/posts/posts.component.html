@@ -1,6 +1,6 @@
 <ng-container [gqlQuery]="postsQuery" class="posts" >
   <div *gqlFetching>Loading</div>
-  <div *gqlData="let data" class="posts">
+  <div *gqlData="postsQuery; let data" class="posts">
     <a *ngFor="let p of data.posts" [routerLink]="p.id" routerLinkActive="active">{{p.title}}</a>
   </div>
   <div *gqlError="let error">{{error}}</div>
