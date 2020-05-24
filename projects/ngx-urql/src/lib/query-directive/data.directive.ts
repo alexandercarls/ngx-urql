@@ -19,6 +19,7 @@ export class DataDirective {
     }
 
     if (show) {
+      // TODO: Type is not inferred
       this.viewContainer.createEmbeddedView(this.templateRef, {$implicit: data});
       this.hasView = true;
     } else {

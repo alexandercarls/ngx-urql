@@ -1,5 +1,7 @@
 import {Directive, TemplateRef, ViewContainerRef} from '@angular/core';
 
+// TODO: Maybe rename `fetching` to `loading`
+
 @Directive({
   selector: '[gqlFetching]'
 })

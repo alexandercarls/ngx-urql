@@ -13,7 +13,7 @@ import {NgxUrqlModule} from 'ngx-urql';
     CommonModule,
     PostsRoutingModule,
     ReactiveFormsModule,
-    // TODO: What is the best practive for the registation?
+    // TODO: What is the best practice for the registation?
     //  forRoot, forChild, and without those Methods is confusing
     NgxUrqlModule,
   ]

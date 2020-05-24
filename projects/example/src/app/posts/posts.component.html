@@ -1,5 +1,9 @@
-<div class="posts">
-  <a *ngFor="let p of posts | async" [routerLink]="p.id" routerLinkActive="active">{{p.title}}</a>
-</div>
+<ng-container class="posts" [gqlQuery]="postsQuery | async">
+  <div *gqlFetching>Loading</div>
+  <div *gqlError="let error">{{error}}</div>
+  <div *gqlData="let data" class="posts">
+    <a *ngFor="let p of data.posts" [routerLink]="p.id" routerLinkActive="active">{{p.title}}</a>
+  </div>
+</ng-container>
 
 <router-outlet></router-outlet>

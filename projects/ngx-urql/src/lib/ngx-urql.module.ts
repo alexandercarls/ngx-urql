@@ -1,18 +1,19 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {ClientConfig, GRAPHQL_CLIENT_CONFIG} from './client-config';
 import {GraphQLClient} from './graphql-client.service';
-import { QueryDirective } from './query-directive/query.directive';
-import { DataDirective } from './query-directive/data.directive';
-import { FetchingDirective } from './query-directive/fetching.directive';
-import { ErrorDirective } from './query-directive/error.directive';
+import {QueryDirective} from './query-directive/query.directive';
+import {DataDirective} from './query-directive/data.directive';
+import {FetchingDirective} from './query-directive/fetching.directive';
+import {ErrorDirective} from './query-directive/error.directive';
 
 @NgModule({
   declarations: [QueryDirective, DataDirective, FetchingDirective, ErrorDirective],
   imports: [],
   exports: [
     QueryDirective,
+    FetchingDirective,
     DataDirective,
-    FetchingDirective
+    ErrorDirective,
   ],
 })
 export class NgxUrqlModule {

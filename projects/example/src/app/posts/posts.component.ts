@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {map, tap} from 'rxjs/operators';
 import {GraphQLClient} from 'ngx-urql';
 
 @Component({
@@ -9,8 +8,7 @@ import {GraphQLClient} from 'ngx-urql';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostsComponent {
-
-  public posts = this.gql.query<any>({
+  public postsQuery = this.gql.query<Post>({
     query: `
       query Posts {
         posts {
@@ -19,11 +17,13 @@ export class PostsComponent {
         }
       }
     `,
-  }).pipe(
-    map(r => r.data?.posts ?? [])
-  );
+  });
 
   constructor(private gql: GraphQLClient) {
   }
 
 }
+
+type Post = {
+  posts: Record<string, any>[];
+};

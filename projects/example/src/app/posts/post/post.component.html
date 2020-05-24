@@ -9,17 +9,18 @@
       <input formControlName="title">
       <button>Save</button>
     </form>
+
     <pre>{{post | json}}</pre>
   </ng-container>
 
-  <!--  This does not allow for partial responses-->
-  <!--  <ng-container *ngIf="postResult.data && !postResult.error">-->
-  <!--    &lt;!&ndash;    ... and does not allow for `as` unwrapping&ndash;&gt;-->
-  <!--    <pre>{{postResult.data.post | json}}</pre>-->
-  <!--    &lt;!&ndash;...&ndash;&gt;-->
-  <!--  </ng-container>-->
 </ng-container>
 
+<!--  This does not allow for partial responses-->
+<!--  <ng-container *ngIf="postResult.data && !postResult.error">-->
+<!--    &lt;!&ndash;    ... and does not allow for `as` unwrapping&ndash;&gt;-->
+<!--    <pre>{{postResult.data.post | json}}</pre>-->
+<!--    &lt;!&ndash;...&ndash;&gt;-->
+<!--  </ng-container>-->
 
 <!--TODO: Is there a use case where you want to access data and error inside data or vice versa?-->
 <ng-container [gqlQuery]="postQuery | async">

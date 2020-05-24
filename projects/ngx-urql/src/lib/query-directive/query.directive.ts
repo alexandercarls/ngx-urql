@@ -3,8 +3,9 @@ import {QueryResult} from '../operations/query';
 import {DataDirective} from './data.directive';
 import {FetchingDirective} from './fetching.directive';
 import {ErrorDirective} from './error.directive';
+import {Subject} from "rxjs";
 
-// TODO: The directive allow for partial results per default (i.e. displaying the error **and** data.
+// TODO: The directive allow for partial results per default (i.e. displaying the error **and** the data.
 //   Do we need to add an option to disable that behaviour?
 
 @Directive({
@@ -23,6 +24,7 @@ export class QueryDirective<T> implements AfterContentInit {
 
     console.log('[QueryDirective]: Input changed - ', value);
 
+    console.log('has fetch dir', this.fetchDirective)
     this.fetchDirective?.showContent(value.fetching);
 
     // We need to force remove the content if the query has no data (i.e. is fetching or has an error)
