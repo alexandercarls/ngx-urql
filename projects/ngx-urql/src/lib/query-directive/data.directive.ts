@@ -1,4 +1,4 @@
-import {Directive, TemplateRef, ViewContainerRef} from '@angular/core';
+import {ChangeDetectorRef, Directive, TemplateRef, ViewContainerRef} from '@angular/core';
 
 @Directive({
   selector: '[gqlData]'
@@ -7,7 +7,9 @@ export class DataDirective {
   private hasView = false;
 
   constructor(private templateRef: TemplateRef<any>,
-              private viewContainer: ViewContainerRef) {
+              private viewContainer: ViewContainerRef,
+              private cdr: ChangeDetectorRef,
+              ) {
   }
 
   public showContent(data?: unknown): void {
@@ -21,6 +23,7 @@ export class DataDirective {
     if (show) {
       // TODO: Type is not inferred
       this.viewContainer.createEmbeddedView(this.templateRef, {$implicit: data});
+      this.cdr.markForCheck();
       this.hasView = true;
     } else {
       this.viewContainer.clear();

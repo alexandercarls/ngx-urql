@@ -1,4 +1,4 @@
-<ng-container class="posts" [gqlQuery]="postsQuery | async">
+<ng-container class="posts" [gqlQuery]="postsQuery">
   <div *gqlFetching>Loading</div>
   <div *gqlError="let error">{{error}}</div>
   <div *gqlData="let data" class="posts">
