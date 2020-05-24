@@ -45,12 +45,12 @@ NgxUrqlModule.forRoot('https://fakeql.com/graphql/439b33402a495423dbaa6c467a59bc
     ```
    
     ```html
-   <ng-container class="posts" [gqlQuery]="postsQuery | async">
+   <ng-container [gqlQuery]="postsQuery" class="posts" >
      <div *gqlFetching>Loading</div>
-     <div *gqlError="let error">{{error}}</div>
      <div *gqlData="let data" class="posts">
        <a *ngFor="let p of data.posts" [routerLink]="p.id" routerLinkActive="active">{{p.title}}</a>
      </div>
+     <div *gqlError="let error">{{error}}</div>
    </ng-container>
     ```
    
