@@ -1,0 +1,1 @@
+# ngx-urql-codegen-plugin
