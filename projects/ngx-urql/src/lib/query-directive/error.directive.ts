@@ -12,7 +12,6 @@ export class ErrorDirective {
   }
 
   public showContent(error?: CombinedError): void {
-    console.log('[ErrorDirective]: show content called');
 
     const show = error !== undefined;
     if (this.hasView === show) {

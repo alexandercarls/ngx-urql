@@ -2,7 +2,7 @@
 
 <ng-container [gqlQuery]="postQuery">
   <div *gqlFetching>Loading</div>
-  <div *gqlData="postQuery ;let data">
+  <div *gqlData="postQuery; let data">
     Has Data:
     <pre>
     {{data | json }}
@@ -15,5 +15,3 @@
     </pre>
   </div>
 </ng-container>
-
-

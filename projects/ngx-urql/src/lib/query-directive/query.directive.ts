@@ -21,24 +21,22 @@ export class QueryDirective<T> implements AfterContentInit, OnDestroy {
 
   @Input('gqlQuery')
   public set query(value: Observable<QueryResult<T>>) {
-    if (value === null) {
-      console.log('[QueryDirective]: value is null');
-      return;
+    if (!value) {
+      throw new Error('`value` should not be falsy');
     }
 
-    console.log('[QueryDirective]: Input changed - ', new Date().getTime());
+    if (this.innerQuery) {
+      throw new Error('Passing a new Observable is not supported. If you have this use case, please report it.');
+    }
 
-    // TODO: We need to re-sub if the Observable changes
     this.innerQuery = value;
   }
 
   public ngAfterContentInit(): void {
-    console.log('[QueryDirective]: ngAfterContentInit - ', new Date().getTime());
     // TODO: Delay fetching state by 100ms, test, as the content init is delayed by default?
     //   it is always 1ms, and via 6x throttling and fast 3g, about 8ms.
 
     this.sub = this.innerQuery.subscribe(r => {
-      console.log(r);
       this.fetchDirective?.showContent(r.fetching);
 
       // We need to force remove the content if the query has no data (i.e. is fetching or has an error)

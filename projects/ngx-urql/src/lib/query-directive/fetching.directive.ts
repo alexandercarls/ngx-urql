@@ -13,7 +13,6 @@ export class FetchingDirective {
   }
 
   public showContent(show: boolean): void {
-    console.log('[FetchingDirective]: show content called');
 
     if (this.hasView === show) {
       return;

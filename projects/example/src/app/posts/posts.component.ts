@@ -8,7 +8,7 @@ import {GraphQLClient} from 'ngx-urql';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostsComponent {
-  public postsQuery = this.gql.query<Post>({
+  public postsQuery = this.gql.query<PostsResponse>({
     query: `
       query Posts {
         posts {
@@ -24,6 +24,11 @@ export class PostsComponent {
 
 }
 
-type Post = {
-  posts: Record<string, any>[];
-};
+interface PostsResponse {
+  posts: Post[];
+}
+
+interface Post {
+  id: string;
+  title: string
+}

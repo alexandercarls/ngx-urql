@@ -22,8 +22,6 @@ export class DataDirective<T> {
   }
 
   public showContent(data?: T): void {
-    console.log('[DataDirective]: show content called');
-
     const show = data !== undefined;
     if (this.hasView === show) {
       return;
