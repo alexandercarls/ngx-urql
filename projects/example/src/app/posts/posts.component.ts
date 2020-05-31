@@ -1,5 +1,7 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {GraphQLClient} from 'ngx-urql';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {QueryResult} from 'ngx-urql';
+import {PostsGQL, PostsQuery} from './posts.component.generated';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-posts',
@@ -7,28 +9,13 @@ import {GraphQLClient} from 'ngx-urql';
   styleUrls: ['./posts.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PostsComponent {
-  public postsQuery = this.gql.query<PostsResponse>({
-    query: `
-      query Posts {
-        posts {
-          id
-          title
-        }
-      }
-    `,
-  });
+export class PostsComponent implements OnInit {
+  public postsQuery!: Observable<QueryResult<PostsQuery>>;
 
-  constructor(private gql: GraphQLClient) {
+  constructor(private postsGQL: PostsGQL) {
   }
 
-}
-
-interface PostsResponse {
-  posts: Post[];
-}
-
-interface Post {
-  id: string;
-  title: string
+  public ngOnInit() {
+    this.postsQuery = this.postsGQL.query({});
+  }
 }

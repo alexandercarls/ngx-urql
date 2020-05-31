@@ -1,8 +1,10 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {GraphQLClient} from 'ngx-urql';
+import {QueryResult} from 'ngx-urql';
 import {ActivatedRoute} from '@angular/router';
 import {filter, map, shareReplay, switchMap} from 'rxjs/operators';
 import {FormBuilder} from '@angular/forms';
+import {PostByIdGQL, PostByIdQuery, PostFragment, SavePostGQL} from './post.component.generated';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-post',
@@ -15,39 +17,25 @@ export class PostComponent implements OnInit {
     title: '',
   });
 
-  postQuery = this.route.paramMap.pipe(
-    map(pm => +pm.get('id')!),
-    switchMap(id => this.gql.query<{ post: Record<string, any> }, { id: number }>({
-      query: `query PostById($id: ID!) {
-  post(id: $id) {
-    id
-    date
-    title
-    user {
-      id
-      firstname
-    }
-    comments {
-      id
-      text
-    }
-  }
-}`,
-      variables: {id}
-    })),
-    shareReplay(1)
-  );
+  public postQuery!: Observable<QueryResult<PostByIdQuery>>;
 
   constructor(private route: ActivatedRoute,
-              private gql: GraphQLClient,
               private fb: FormBuilder,
+              private postByIdGQL: PostByIdGQL,
+              private savePostGQL: SavePostGQL
   ) {
   }
 
   public ngOnInit(): void {
+    this.postQuery = this.route.paramMap.pipe(
+      map(pm => pm.get('id')!),
+      switchMap(id => this.postByIdGQL.query({variables: {id}})),
+      shareReplay(1)
+    );
+
     this.postQuery.pipe(
-      filter(r => !!r.data),
-      map(r => r.data!.post)
+      map(r => r.data?.post),
+      filter((post): post is PostFragment => !!post),
     )
       .subscribe(post => {
         this.postForm.patchValue({
@@ -58,18 +46,10 @@ export class PostComponent implements OnInit {
 
   // TODO: Research why urql re-reruns all queries
   public handleSubmit(): void {
-    this.gql.mutate<any, { id: number, input: { title: string } }>({
-      query: `mutation SavePost($id: ID!, $input: UpdatePostInput!) {
-  updatePost(id: $id, input: $input) {
-    id
-    title
-  }
-}`,
-      variables: {
-        id: +this.route.snapshot.paramMap.get('id')!,
-        input: {title: this.postForm.value.title}
-      }
-    });
+    this.savePostGQL.mutate({variables: {
+      id: this.route.snapshot.paramMap.get('id')!,
+      input: {title: this.postForm.value.title}
+    }});
   }
 
 }

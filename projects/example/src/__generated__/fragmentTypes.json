@@ -1,0 +1,21 @@
+{
+  "__schema": {
+    "types": [
+      {
+        "kind": "UNION",
+        "name": "_Entity",
+        "possibleTypes": [
+          {
+            "name": "User"
+          },
+          {
+            "name": "Post"
+          },
+          {
+            "name": "Comment"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+schema: "https://fakeql.com/graphql/439b33402a495423dbaa6c467a59bcc0"
+documents: "**/*.graphql"
+generates:
+  src/types.generated.ts:
+    - add: "/* tslint:disable */"
+    - "typescript"
+  src/:
+    preset: near-operation-file
+    presetConfig:
+      extension: .generated.ts
+      baseTypesPath: types.generated.ts
+    plugins:
+      - add: "/* tslint:disable */"
+      - "typescript-operations"
+      - "ngx-urql-codegen-plugin"
+  src/__generated__/fragmentTypes.json:
+    plugins:
+      - fragment-matcher

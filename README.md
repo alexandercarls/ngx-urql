@@ -14,6 +14,11 @@ A GraphQL Library that wraps the blazing-fast [urql](https://formidable.com/open
   ```bash
   (cd projects/ngx-urql && yarn)
   ```
+1. Install the dependencies of the codegen
+   
+  ```bash
+  (cd projects/ngx-urql-codegen-plugin && yarn)
+  ```
 
 
 1. Install the dependencies for the example app.
@@ -27,10 +32,17 @@ A GraphQL Library that wraps the blazing-fast [urql](https://formidable.com/open
   ng build ngx-urql --watch
   ```
 
+1. Build the codegen itself.
+  ```bash
+  (cd projects/ngx-urql-codegen-plugin && yarn build)
+  ```
+
 1. Link the local version of the library to the example app.
-   ``bash
+   ```bash
    (cd dist/ngx-urql && npm link)
    npm link ngx-urql
+   (cd projects/ngx-urql-codegen-plugin && npm link)
+   npm link ngx-urql-codegen-plugin
    ```
 
 1. Run `ng serve` to start the example app. Navigate to `http://localhost:4200/`. 
