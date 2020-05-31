@@ -1,0 +1,25 @@
+fragment Post on Post {
+  id
+  date
+  title
+  user {
+    id
+    firstname
+  }
+  comments {
+    id
+    text
+  }
+}
+
+query PostById($id: ID!) {
+  post(id: $id) {
+    ...Post
+  }
+}
+
+mutation SavePost($id: ID!, $input: UpdatePostInput!) {
+  updatePost(id: $id, input: $input) {
+    ...Post
+  }
+}
